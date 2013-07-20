@@ -1,34 +1,32 @@
 """
 file:   userbreakdown.py
 author: NManoogian
-desc:   Uses apache log files and .htpasswd file to create a user breakdown
+desc:   Uses apache log files to create a user breakdown
 """
 import sys
 
-def getUserLines(userlst, filename):
-    # Retrieve Users
-    users = []
+def getUserLines(filename):
+    # Open the file
     f = open(filename)
-    for line in f:
-        print (
-        users.append(line.split()[2])
 
+    # Make a dictionary
+    # user : list of lines
     userline = {}
 
-    # Generate user to list of lines dictionary
-    for user in userlst:
-        userline[user] = []
-
-    # If the line contains a user, add the line to the dictionary
+    # For each line, find the user
     for line in f:
-        for user in userlst:
-            if user in line:
-                userline[user].append(line)
+        user = line.split()[2]
+        # If the user is not in the dictionary, make an empty line list
+        if user not in userline:
+            userline[user] = [];
+        # Add line to line list
+        userline[user].append(line)
+
     return userline
 
 
 def main():
-    userline = getUserLines(getUsers(sys.argv[1]),sys.argv[1]);
+    userline = getUserLines(sys.argv[1]);
     for key in userline:
         print(key);
         for line in userline[key]:
