@@ -26,9 +26,13 @@ def getUserLines(filename):
 
 
 def main():
-    userline = getUserLines(sys.argv[1]);
+    if len(sys.argv) > 1: 
+        userline = getUserLines(sys.argv[1]);
+    else:
+        userline = getUserLines("/var/log/apache2/access.log");
+
     for key in userline:
-        print(key);
+        print(key + " " + str(len(userline[key])));
         for line in userline[key]:
             # Weed out image requests
             if "/icons/" not in line and "favicon" not in line:
