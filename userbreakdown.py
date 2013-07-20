@@ -20,7 +20,7 @@ def getUserLines(filename):
         if user not in userline:
             userline[user] = [];
         # Add line to line list
-        userline[user].append(line)
+        userline[user].append(line.strip())
 
     return userline
 
@@ -30,6 +30,8 @@ def main():
     for key in userline:
         print(key);
         for line in userline[key]:
-            print("\t" + line)
+            # Weed out image requests
+            if "/icons/" not in line and "favicon" not in line:
+                print("\t" + line)
 
 main()
